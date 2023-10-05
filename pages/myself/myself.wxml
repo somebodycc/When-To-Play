@@ -1,0 +1,22 @@
+<!--pages/myself/myself.wxml-->
+<view class="container">
+    <view class="user_info">
+        <view class="user_info_count">
+            <text>什么时候</text>
+            <text>1</text>
+        </view>
+        <view>
+            <image src="" ></image>
+            <text>好椰</text>
+        </view>
+        <view class="user_info_count">
+            <text>#信用值#</text>
+            <text>1</text>
+        </view>
+    </view>
+    <view class="list_container">
+        <view class="list_item" wx:for="{{['选项1', '选项2', '选项3', '选项4']}}" wx:key="index">
+            <text>{{item}}</text>
+        </view>
+    </view>
+</view>

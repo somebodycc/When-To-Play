@@ -1,0 +1,53 @@
+/* pages/myself/myself.wxss */
+.container{
+    padding: 64rpx 32rpx 32rpx 32rpx;
+    display: flex;
+    flex-direction: column;
+    gap: 60rpx;
+}
+
+.user_info{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+    .user_info_count{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        flex: 1;
+    }
+    .user_info view:nth-child(2){
+        display: flex;
+        flex-direction: column;
+        gap: 16rpx;
+        align-items: center;
+        justify-content: center;
+    }
+    .user_info view:nth-child(2) image{
+        width: 256rpx;
+        height: 256rpx;
+        border: solid 1px #000;
+        border-radius: 50%;
+    }
+
+.list_container{
+    display: flex;
+    flex-direction: column;
+}
+.list_item{
+    height: 112rpx;
+    box-sizing: border-box;
+    border-top: solid 2rpx #d9d9d9;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.list_item:last-of-type{
+    border-bottom: solid 2rpx #d9d9d9;
+}
+.list_item text:first-child{
+    font-size: 32rpx;
+    color: #000;
+}

@@ -1,0 +1,52 @@
+<!--pages/newWTP/newWTP.wxml-->
+<page-meta>
+    <navigation-bar title="发起什么时候"></navigation-bar>
+</page-meta>
+
+<view class="container">
+    <view class="reservation_main" bind:tap="showTodoSelect">
+        <image src="{{reservation.todoImg}}"></image>
+        <text>{{reservation.todoName}}</text>
+    </view>
+    <view class="list_container">
+        <view class="list_item">
+            <text>日期</text>
+            <picker mode="date" value="{{pickedDate}}" start="{{pickedDate}}" bind:change="bindDateChange">{{pickedDate}}</picker>
+        </view>
+        <view class="list_item">
+            <text>时间</text>
+            <picker mode="time" value="{{pickedTime}}" bind:change="bindTimeChange">{{pickedTime}}</picker>
+        </view>
+        <view class="list_item">
+            <text>预期人数</text>
+            <picker mode="selector" range="{{[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]}}" value="{{3}}" bind:change="bindPickerChange">{{numOfParticipant}}</picker>
+        </view>
+        <view class="list_item">
+            <text>是否允许超员</text>
+            <text>{{item.value}}</text>
+            <switch checked="{{allowExPlayer}}" bind:change="exPlayer"></switch>
+        </view>
+    </view>
+    <button style="white-space: nowrap;">发布并分享给好友</button>
+    <view>预览:</view>
+    <wtp reservation="{{reservation}}" style="transform: translate(-32rpx, -200rpx);"></wtp>
+</view>
+
+
+<page-container
+show="{{showPopup}}"
+z-index="1000"
+duration="200"
+round
+close-on-slideDown
+overlay-style="background-color: rgba(0, 0, 0, 0.5);"
+custom-style="height: {{pageHeight}}"
+bind:leave="hidePopup">
+    <!-- 修改预约项目页面 -->
+    <view wx:if="{{showTodoSelect}}" class="dialogContent">
+        <view class="reservation_item" wx:for="{{reservationItems}}" wx:key="index" bind:tap="changeReservationMain" data-image="{{item.image}}" data-name="{{item.name}}">
+            <image src="{{item.image}}"></image>
+            <text>{{item.name}}</text>
+        </view>
+    </view> 
+</page-container>

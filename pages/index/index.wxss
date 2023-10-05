@@ -1,19 +1,46 @@
 /**index.wxss**/
-.userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #aaa;
+.container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+swiper{
+    width: 100%;
+    height: 100%;
+}
+swiper-item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.userinfo-avatar {
-  overflow: hidden;
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
+.initiateBtn{
+    position: fixed;
+    right: 0;
+    bottom: 10%;
+    height: 80rpx;
+    padding-left: 32rpx;
+    padding-right: 16rpx;
+    border: solid 2rpx #fff;
+    border-radius: 40rpx 0 0 40rpx;
+    box-sizing: border-box;
+    background-color: bisque;
 }
-
-.usermotto {
-  margin-top: 200px;
+.initiateBtn text{
+    line-height: 80rpx;
+}
+.initiateBtn text:first-child{
+    color: #6c6c6c;
+}
+.initiateBtn text:last-child{
+    color: #262626;
+    font-size: 36rpx;
+    font-family: 'Source Han Sans CN-Medium';
 }

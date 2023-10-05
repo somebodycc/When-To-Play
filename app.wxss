@@ -1,10 +1,24 @@
 /**app.wxss**/
-.container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 200rpx 0;
-  box-sizing: border-box;
-} 
+page {
+    font-family: 'Source Han Sans CN';
+    font-style: normal;
+    font-size: 32rpx;
+    
+}
+
+.roundImage{
+    border: solid 1rpx #000;
+    border-radius: 50%;
+}
+/* @font-face{
+    font-family: 'Source Han Sans CN';
+    src: url('https://somebodycc.github.io/SourceHanSansCN-Regular.otf') format('opentype');
+    font-style: normal;
+    font-weight: 400;
+}
+@font-face{
+    font-family: 'Source Han Sans CN';
+    src: url('https://somebodycc.github.io/SourceHanSansCN-Medium.otf') format('opentype');
+    font-style: normal;
+    font-weight: 500;
+} */

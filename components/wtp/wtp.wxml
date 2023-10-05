@@ -1,0 +1,32 @@
+<!--components/wtp/wtp.wxml-->
+<view class="reservation_item">
+    <!-- 邀约头，包含邀约人信息 -->
+    <view class="reservation_head">
+        <text>{{reservation.initiatorName}}</text>
+        <image src="{{reservation.initiatorAvatar}}"></image>
+        <text>发起了：</text>
+    </view>
+    <!-- 邀约内容 -->
+    <view class="reservation_main">
+        <text>什么时候</text>
+        <image src="{{reservation.todoImg}}"></image>
+        <text>{{reservation.todoName}}</text>
+    </view>
+    <!-- 附加的邀约信息 -->
+    <view wx:if="{{rStyle === 1}}" class="reservation_tail">
+        <text>{{reservation.time}}</text>
+        <view>
+            <view wx:if="{{reservation.status === 1}}" class="reservation_status reservation_settled">
+                <text>已接受</text>
+                <image src=""></image>
+            </view>
+            <view wx:if="{{reservation.status === -1}}" class="reservation_status reservation_settled">
+                <text>已拒绝</text>
+                <image src=""></image>
+            </view>
+            <view wx:if="{{reservation.status === 0}}" class="reservation_status reservation_pending">
+                <button>接受</button><button>拒绝</button>
+            </view>
+        </view>
+    </view>
+</view>
