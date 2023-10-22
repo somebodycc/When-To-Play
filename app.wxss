@@ -5,7 +5,13 @@ page {
     font-size: 32rpx;
     
 }
-
+.background{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: -999;
+    background: linear-gradient(-140deg, #00ffff, #ffc0cb);
+}
 .roundImage{
     border: solid 1rpx #000;
     border-radius: 50%;

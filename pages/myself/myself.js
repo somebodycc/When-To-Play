@@ -1,18 +1,65 @@
 // pages/myself/myself.js
+const { myrequest } = require('../../utils/util')
+const app = getApp()
+const ip = app.globalData.ip
+
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
+        avatar: ""
+    },
 
+    //更改头像
+    changeAvatar(e){
+        const avatarUrl = e.detail.avatarUrl
+        var user = wx.getStorageSync('user')
+        wx.uploadFile({
+            filePath: avatarUrl,
+            name: "avatar",
+            url: ip + "/user/modify-avatar",
+            formData: {
+                type: "avatar",
+                openid: user.openid
+            },
+            success: res => {
+                var res = JSON.parse(res.data)
+                console.log(res, res.success)
+                if (!res.success) {
+                    return wx.showToast({title: '上传图片失败', icon: "error"})
+                }
+                var avatar = res.imageUrl
+                console.log("头像地址: ", avatar)
+                user.avatar = avatar
+                this.setData({
+                    user
+                })
+                //同步头像数据到本地
+                wx.setStorageSync('user', user)
+            }
+        })
+    },
+
+    initUserInfo(){
+        var user = wx.getStorageSync('user')
+        this.setData({
+            user
+        })
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-
+        if (app.globalData.checkLogin) {
+            this.initUserInfo()
+        } else {
+            app.checkLoginReadyCallback = () => {
+                this.initUserInfo()
+            }
+        }
     },
 
     /**

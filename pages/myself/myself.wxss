@@ -28,7 +28,6 @@
     .user_info view:nth-child(2) image{
         width: 256rpx;
         height: 256rpx;
-        border: solid 1px #000;
         border-radius: 50%;
     }
 

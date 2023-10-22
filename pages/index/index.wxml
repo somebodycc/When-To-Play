@@ -1,13 +1,35 @@
 <!--index.wxml-->
-<view class="container">
+<view class="background"></view>
+<view class="container" bind:touchstart="onTouch">
     <!-- 滑块用于放置一个一个的邀约事件 -->
-    <swiper class="reservation_container" vertical>
-        <swiper-item wx:for="{{reservations}}" wx:key="id">
-            <wtp reservation="{{item}}"></wtp>
+    <swiper class="wtp_container" vertical>
+        <swiper-item wx:if="{{wtps.length == 0}}">
+            <view>还没有什么时候哦，快去发起邀请吧</view>
+        </swiper-item>
+        <swiper-item wx:for="{{wtps}}" wx:key="id">
+            <wtp class="wtpItem" wtp="{{item}}" r-style="{{item.rStyle}}"></wtp>
         </swiper-item>
     </swiper>
-    <view class="initiateBtn" bind:tap="newWTP">
+    <view class="initiateBtn" catch:tap="newWTP" bind:touchstart="btnStart" bind:touchmove="btnMove" style="top: 86%;transform: translateY({{translateY}});">
         <text>发起   </text>
         <text>什么时候</text>
     </view>
 </view>
+
+<page-container
+show="{{showPopup}}"
+z-index="1000"
+duration="200"
+round
+close-on-slideDown
+overlay-style="background-color: rgba(0, 0, 0, 0.5);"
+custom-style="height: {{pageHeight}}"
+bind:leave="hidePopup">
+    <!-- 链接信息页面 -->
+    <view wx:if="{{showShareLink}}" class="dialogContent">
+        <wtp wtp="{{linkWtp}}"></wtp>
+        <view class="ignoreBtn">
+            <text bind:tap="hidePopup">以后再说>>></text>
+        </view>
+    </view> 
+</page-container>

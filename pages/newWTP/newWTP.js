@@ -1,5 +1,7 @@
 // pages/newWTP/newWTP.js
-import {formatTime} from '../../utils/util'
+const app = getApp()
+const ip = app.globalData.ip
+import { myrequest, formatTime } from '../../utils/util'
 
 Page({
 
@@ -8,21 +10,22 @@ Page({
      */
     data: {
         reservationItems: [{
-            image: "",
+            image: ip + "/images/todo-APEX.png",
             name: "APEX"
         },{
-            image: "",
+            image: ip + "/images/todo-DeepRock.png",
             name: "深岩银河"
         },{
-            image: "",
+            image: ip + "/images/todo-DontStarve.png",
             name: "饥荒"
         },{
-            image: "",
+            image: ip + "/images/todo-COC.png",
             name: "跑团"
         },{
-            image: "",
+            image: "/icons/plus.png",
             name: "自定义"
         }],
+        number: [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
         showPopup: false,
         pageHeight: "128vw"
     },
@@ -32,8 +35,8 @@ Page({
         const image = e.currentTarget.dataset.image
         const name = e.currentTarget.dataset.name
         this.setData({
-            ["reservation.todoName"]: name,
-            ["reservation.todoImg"]: image
+            ["wtp.todoName"]: name,
+            ["wtp.todoImg"]: image
         })
         this.hidePopup()
     },
@@ -52,7 +55,8 @@ Page({
     //调整预期人数
     bindPickerChange(e){
         this.setData({
-            numOfParticipant: e.detail.value
+            numOfParticipant: this.data.number[e.detail.value],
+            ['wtp.expectedPlayerNum']: this.data.number[e.detail.value]
         })
     },
     //调整是否允许超员
@@ -83,19 +87,83 @@ Page({
         })
     },
 
+    //接收订阅消息
+    async subscribe(){
+        wx.requestSubscribeMessage({
+            tmplIds: ['-qLQGq1AONMkeTyAE8SNlHfXmccbIpVBPvsNHgJfNFk'],
+            success: res => {
+                if (res['-qLQGq1AONMkeTyAE8SNlHfXmccbIpVBPvsNHgJfNFk'] === 'accept') {
+                    //用户接受了订阅
+                    myrequest(ip + '/wtp/mod-invitee-subscribed', 'POST', {
+                        openid: wx.getStorageSync('user').openid,
+                        wtpid: this.data.wtpid,
+                        subscribed: 1
+                    })
+                }
+            }
+        })
+    },
+
+    //发布什么时候
+    async createWTP(){
+        return await new Promise((rs, rj) => {
+            var rowWtp = this.data.wtp
+            var user = wx.getStorageSync('user')
+            var wtp = {
+                initiator: user.openid,
+                todo_name: rowWtp.todoName,
+                todo_image: rowWtp.todoImg,
+                wtp_time: this.data.pickedDate + ' ' + this.data.pickedTime,
+                allow_extra_player: this.data.allowExPlayer,
+                expected_player_num: this.data.numOfParticipant,
+                create_time: formatTime(new Date())
+            }
+            myrequest(ip + '/wtp/new', 'POST', {wtp}, 2900).then(res => {   //需要设定3s内获取到res否则分享会使用错误的分享链接
+                if (res.success) {
+                    this.setData({
+                        wtpid: res.wtpid
+                    })
+                    setTimeout(() => {
+                        wx.navigateBack()
+                    }, 3000)
+                    rs({
+                        title: `${user.nickname}说: 什么时候${this.data.wtp.todoName}`,
+                        path: `/pages/index/index?wtpInvitation=${this.data.wtpid}`
+                    })
+                } else {
+                    rj()
+                }
+            }).catch(err => {
+                rj(err)
+            })
+        })
+    },
+    /* async shareTimeout(){
+        return await new Promise((resolve, reject) => {
+            setTimeout(() => {
+                console.log('shareTimeout')
+                reject()
+            }, 0)
+        })
+    }, */
+
     initData(){
         var date = new Date()
+        var user = wx.getStorageSync('user')
         this.setData({
-            reservation: {
-                initiatorName: "赟宝",
-                initiatorAvatar: "",
-                todoName: "跑团",
-                todoImg: "",
-                time: "今天 19:00",
+            wtp: {
+                initiatorName: user.nickname,
+                initiatorAvatar: user.avatar,
+                todoName: "APEX",
+                todoImg: ip + "/images/todo-APEX.png",
+                joinedPlayerNum: 1,
+                expectedPlayerNum: 4,
+                time: "今天 19:00(示例)",
                 status: 0
             },
-            pickedDate: formatTime(date).slice(0, formatTime(date).indexOf(' ')),
-            pickedTime: formatTime(date).slice(formatTime(date).indexOf(' '), -3),
+            today: formatTime(date).slice(0, formatTime(date).indexOf(' ')),
+            pickedDate: formatTime(date).replace(/\//g, '-').slice(0, formatTime(date).indexOf(' ')),
+            pickedTime: formatTime(date).slice(formatTime(date).indexOf(' ') + 1, -3),
             numOfParticipant: 4,
             allowExPlayer: true
         })
@@ -153,7 +221,16 @@ Page({
     /**
      * 用户点击右上角分享
      */
-    onShareAppMessage() {
+    onShareAppMessage(info) {
+        if (info.from != "button") return {
+            
+        }
 
+        return {
+            title: `什么时候${this.data.wtp.todoName}`,
+            path: `/pages/index/index?wtpInvitation=${this.data.wtpid}`,
+            promise: this.createWTP()   //返回的Promise为rejected时候是不会触发分享的
+            //promise: Promise.race([this.createWTP(), this.shareTimeout()])
+        }
     }
 })

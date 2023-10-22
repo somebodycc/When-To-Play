@@ -2,11 +2,13 @@
 .reservation_item{
     width: 686rpx;
     height: 780rpx;
-    margin: 200rpx 32rpx;
+    /* margin: 200rpx 32rpx; */
     padding: 8rpx;
     box-sizing: border-box;
-    border: solid 2rpx #000;
-    border-radius: 2rpx;
+    border: solid 1rpx #fff;
+    border-radius: 20rpx;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(100px);
     display: flex;
     flex-direction: column;
     gap: 8rpx;
@@ -23,12 +25,16 @@
     .reservation_head image{
         width: 64rpx;
         height: 64rpx;
-        border: solid 1rpx #000;
         border-radius: 50%;
     }
-    .reservation_head text:last-child{
+    .reservation_head text:last-of-type{
         font-size: 28rpx;
         line-height: 50%;
+        color: #262626;
+    }
+    .reservation_head view:last-child{
+        margin-left: auto;
+        font-size: 32rpx;
         color: #262626;
     }
 
@@ -47,8 +53,7 @@
     .reservation_main image{
         width: 206rpx;
         height: 206rpx;
-        border: solid 1rpx #000;
-        border-radius: 50%;
+        border-radius: 20%;
     }
     .reservation_main text:last-child{
         font-family: 'Source Han Sans CN-Medium';
@@ -70,14 +75,58 @@
     .reservation_status{
         display: flex;
         align-items: center;
+        padding-top: 10rpx;
+        border-top: solid 1rpx #fff;
+    }
+    .reservation_pending{
+        justify-content: space-around;
+        gap: 16rpx;
     }
     .reservation_settled > text{
         flex: 1;
         text-align: center;
         font-size: 40rpx;
     }
-    .reservation_settled > image{
+    .moreImg{
+        position: relative;
         width: 32rpx;
         height: 48rpx;
-        border: solid 1px #000;
     }
+        .moreImg > image{
+            width: 32rpx;
+            height: 48rpx;
+        }
+        .more_container{
+            position: absolute;
+            right: 0;
+            bottom: 100%;
+            background-color: bisque;
+            padding: 0 8rpx;
+            min-width: 160rpx;
+            text-align: center;
+            white-space: nowrap;
+            box-sizing: border-box;
+            border: solid 1rpx #8c8c8c;
+
+            transform-origin: 100% 100%;
+            animation-duration: 200ms;
+            animation-name: show-more;
+        }
+        .more_container view{
+            padding: 8rpx 0;
+            box-sizing: border-box;
+            border-bottom: solid 1rpx #b1b1b1;
+        }
+        .more_container view:last-child{
+            border: none;
+        }
+
+
+@keyframes show-more{
+    from{
+        scale: 0;
+    }
+    to{
+        scale: 1;
+    }
+}

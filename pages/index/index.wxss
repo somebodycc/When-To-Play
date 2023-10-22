@@ -24,11 +24,11 @@ swiper-item{
 .initiateBtn{
     position: fixed;
     right: 0;
-    bottom: 10%;
     height: 80rpx;
     padding-left: 32rpx;
     padding-right: 16rpx;
-    border: solid 2rpx #fff;
+    box-sizing: border-box;
+    border-right: none;
     border-radius: 40rpx 0 0 40rpx;
     box-sizing: border-box;
     background-color: bisque;
@@ -43,4 +43,20 @@ swiper-item{
     color: #262626;
     font-size: 36rpx;
     font-family: 'Source Han Sans CN-Medium';
+}
+
+.dialogContent{
+    padding: 64rpx 32rpx 0 32rpx;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16rpx;
+}
+.ignoreBtn{
+    width: 100%;
+    text-align: right;
+}
+.ignoreBtn text{
+    color: rgb(49, 158, 194);
 }

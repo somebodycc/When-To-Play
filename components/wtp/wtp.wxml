@@ -2,30 +2,58 @@
 <view class="reservation_item">
     <!-- 邀约头，包含邀约人信息 -->
     <view class="reservation_head">
-        <text>{{reservation.initiatorName}}</text>
-        <image src="{{reservation.initiatorAvatar}}"></image>
+        <text wx:if="{{rStyle === 1}}">{{wtp.initiatorName}}</text>
+        <image wx:if="{{rStyle === 1}}" src="{{wtp.initiatorAvatar}}"></image>
+        <text wx:if="{{rStyle === 2}}" style="color: #009900;">我</text>
         <text>发起了：</text>
+        <view>{{wtp.joinedPlayerNum}}/{{wtp.expectedPlayerNum}}人已参与</view>
     </view>
     <!-- 邀约内容 -->
     <view class="reservation_main">
         <text>什么时候</text>
-        <image src="{{reservation.todoImg}}"></image>
-        <text>{{reservation.todoName}}</text>
+        <image src="{{wtp.todoImg}}" mode="aspectFill"></image>
+        <text>{{wtp.todoName}}</text>
     </view>
     <!-- 附加的邀约信息 -->
-    <view wx:if="{{rStyle === 1}}" class="reservation_tail">
-        <text>{{reservation.time}}</text>
-        <view>
-            <view wx:if="{{reservation.status === 1}}" class="reservation_status reservation_settled">
+    <view class="reservation_tail">
+        <text>{{wtp.time}}</text>
+        <view wx:if="{{rStyle === 1}}">
+            <view wx:if="{{wtp.status === 1}}" class="reservation_status reservation_settled">
                 <text>已接受</text>
-                <image src=""></image>
+                <view class="moreImg">
+                    <image src="/icons/more.png" mode="aspectFill" catch:tap="tapMore"></image>
+                    <view wx:if="{{showMore}}" class="more_container">
+                        <view catch:tap="rejectWTP" data-wtpid="{{wtp.id}}">拒绝</view>
+                        <view catch:touchstart="doNothing">归档(不在主页显示)</view>
+                    </view>
+                </view>
             </view>
-            <view wx:if="{{reservation.status === -1}}" class="reservation_status reservation_settled">
+            <view wx:if="{{wtp.status === -1}}" class="reservation_status reservation_settled">
                 <text>已拒绝</text>
-                <image src=""></image>
+                <view class="moreImg">
+                    <image src="/icons/more.png" mode="aspectFill" catch:tap="tapMore"></image>
+                    <view wx:if="{{showMore}}" class="more_container">
+                        <view catch:tap="acceptWTP" data-wtpid="{{wtp.id}}">接受</view>
+                        <view catch:touchstart="doNothing">归档(不在主页显示)</view>
+                    </view>
+                </view>
             </view>
-            <view wx:if="{{reservation.status === 0}}" class="reservation_status reservation_pending">
-                <button>接受</button><button>拒绝</button>
+            <view wx:if="{{wtp.status === 0}}" class="reservation_status reservation_pending">
+                <button bind:tap="acceptWTP" data-wtpid="{{wtp.id}}">接受</button>
+                <button bind:tap="rejectWTP" data-wtpid="{{wtp.id}}">拒绝</button>
+            </view>
+        </view>
+
+        <view wx:if="{{rStyle === 2}}">
+            <view class="reservation_status">
+                <button open-type="share" data-todoname="{{wtp.todoName}}" data-wtpid="{{wtp.id}}">分享该什么时候</button>
+                <view class="moreImg">
+                    <image src="/icons/more.png" mode="aspectFill" catch:tap="tapMore"></image>
+                    <view wx:if="{{showMore}}" class="more_container">
+                        <view catch:tap="" data-wtpid="{{wtp.id}}">删除</view>
+                        <view catch:touchstart="doNothing">归档(不在主页显示)</view>
+                    </view>
+                </view>
             </view>
         </view>
     </view>

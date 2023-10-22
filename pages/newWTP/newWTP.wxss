@@ -6,20 +6,19 @@
     gap: 60rpx;
 }
 
-.reservation_main{
+.wtp_main{
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 32rpx;
 }
-.reservation_main image{
+.wtp_main image{
     width: 206rpx;
     height: 206rpx;
-    border: solid 1rpx #000;
-    border-radius: 50%;
+    border-radius: 20%;
 }
-.reservation_main text{
+.wtp_main text{
     font-family: 'Source Han Sans CN-Medium';
     font-size: 48rpx;
     color: #262626;
@@ -40,6 +39,10 @@
     font-size: 32rpx;
     color: #000;
 }
+picker {
+    flex-grow: 1;
+    text-align: right;
+}
 
 .dialogContent{
     padding: 64rpx 32rpx 0 32rpx;
@@ -49,18 +52,17 @@
     justify-content: space-between;
     gap: 16rpx;
 }
-.reservation_item{
+.wtp_item{
     display: flex;
     flex-direction: column;
     flex: none;
 }
-.reservation_item > image{
+.wtp_item > image{
     width: 155.5rpx;
     height: 155.5rpx;
-    border: solid 1rpx #000;
-    border-radius: 50%;
+    border-radius: 20%;
 }
-.reservation_item > text{
+.wtp_item > text{
     text-align: center;
     font-family: 'Source Han Sans CN';
     font-size: 32rpx;

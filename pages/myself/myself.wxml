@@ -1,4 +1,5 @@
 <!--pages/myself/myself.wxml-->
+<view class="background"></view>
 <view class="container">
     <view class="user_info">
         <view class="user_info_count">
@@ -6,8 +7,10 @@
             <text>1</text>
         </view>
         <view>
-            <image src="" ></image>
-            <text>好椰</text>
+            <button style="background-color: transparent;" open-type="chooseAvatar" bind:chooseavatar="changeAvatar">
+                <image src="{{user.avatar}}" mode="aspectFill"></image>
+            </button>
+            <text>{{user.nickname}}</text>
         </view>
         <view class="user_info_count">
             <text>#信用值#</text>
