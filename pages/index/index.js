@@ -48,7 +48,7 @@ Page({
     //获取和当前用户相关的WTP
     getRelatedWTP(){
         const openid = wx.getStorageSync('user').openid
-        myrequest(ip + '/wtp/user-related', 'GET', {openid}).then(res => {
+        myrequest(ip + '/wtp/user-related', 'GET', {openid, all: 0}).then(res => {
             const rowWtps = res.wtps
             var wtps = rowWtps.map(wtp => {
                 return {
@@ -103,6 +103,11 @@ Page({
                 linkWtp: wtp
             })
         })
+    },
+
+    //当对什么时候进行改动时
+    onEditWTP(){
+        this.onShow()
     },
 
     //监听按钮移动开始

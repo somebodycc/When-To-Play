@@ -100,14 +100,15 @@
             position: absolute;
             right: 0;
             bottom: 100%;
-            background-color: bisque;
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(100px);
             padding: 0 8rpx;
             min-width: 160rpx;
             text-align: center;
             white-space: nowrap;
             box-sizing: border-box;
-            border: solid 1rpx #8c8c8c;
-
+            border: solid 1rpx #bcbcbc;
+            border-radius: 32rpx 32rpx 8rpx 32rpx;
             transform-origin: 100% 100%;
             animation-duration: 200ms;
             animation-name: show-more;
@@ -115,7 +116,7 @@
         .more_container view{
             padding: 8rpx 0;
             box-sizing: border-box;
-            border-bottom: solid 1rpx #b1b1b1;
+            border-bottom: solid 1rpx #bcbcbc;
         }
         .more_container view:last-child{
             border: none;

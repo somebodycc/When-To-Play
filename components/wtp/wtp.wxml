@@ -24,7 +24,7 @@
                     <image src="/icons/more.png" mode="aspectFill" catch:tap="tapMore"></image>
                     <view wx:if="{{showMore}}" class="more_container">
                         <view catch:tap="rejectWTP" data-wtpid="{{wtp.id}}">拒绝</view>
-                        <view catch:touchstart="doNothing">归档(不在主页显示)</view>
+                        <view catch:tap="" data-wtpid="{{wtp.id}}">归档(不在主页显示)</view>
                     </view>
                 </view>
             </view>
@@ -34,7 +34,7 @@
                     <image src="/icons/more.png" mode="aspectFill" catch:tap="tapMore"></image>
                     <view wx:if="{{showMore}}" class="more_container">
                         <view catch:tap="acceptWTP" data-wtpid="{{wtp.id}}">接受</view>
-                        <view catch:touchstart="doNothing">归档(不在主页显示)</view>
+                        <view catch:tap="" data-wtpid="{{wtp.id}}">不再显示</view>
                     </view>
                 </view>
             </view>
@@ -50,8 +50,8 @@
                 <view class="moreImg">
                     <image src="/icons/more.png" mode="aspectFill" catch:tap="tapMore"></image>
                     <view wx:if="{{showMore}}" class="more_container">
-                        <view catch:tap="" data-wtpid="{{wtp.id}}">删除</view>
-                        <view catch:touchstart="doNothing">归档(不在主页显示)</view>
+                        <view ccatch:tap="" data-wtpid="{{wtp.id}}">归档(不在主页显示)</view>
+                        <view catch:tap="deleteWTP" data-wtpid="{{wtp.id}}">删除(不可撤回！)</view>
                     </view>
                 </view>
             </view>

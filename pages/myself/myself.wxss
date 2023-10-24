@@ -30,6 +30,9 @@
         height: 256rpx;
         border-radius: 50%;
     }
+    .user_info view:nth-child(2) input{
+        text-align: center;
+    }
 
 .list_container{
     display: flex;

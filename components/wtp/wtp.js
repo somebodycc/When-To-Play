@@ -91,6 +91,36 @@ Component({
                 }
             })
         },
+        //删除什么时候
+        deleteWTP(e){
+            const openid = wx.getStorageSync('user').openid
+            const wtpid = e.currentTarget.dataset.wtpid
+            wx.showModal({
+                title: "删除什么时候",
+                content: "该操作不可撤销！",
+                confirmColor: "#ff0000",
+                success: res => {
+                    if (res.confirm) {
+                        //用户点击确定
+                        myrequest(ip + '/wtp/delete', 'POST', {
+                            openid,
+                            wtpid,
+                        }).then(res => {
+                            if (res.success) {
+                                wx.showToast({
+                                  title: '删除成功',
+                                  icon: 'none'
+                                })
+                                this.triggerEvent('delete')
+                            }
+                        })
+                    } else if (res.cancel) {
+                        //用户点击取消
+                    }
+                }
+            })
+            
+        },
 
         //更多操作点击
         tapMore(){

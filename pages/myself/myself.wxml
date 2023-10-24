@@ -10,7 +10,7 @@
             <button style="background-color: transparent;" open-type="chooseAvatar" bind:chooseavatar="changeAvatar">
                 <image src="{{user.avatar}}" mode="aspectFill"></image>
             </button>
-            <text>{{user.nickname}}</text>
+            <input type="nickname" value="{{user.nickname}}" bind:blur="changeNickname"></input>
         </view>
         <view class="user_info_count">
             <text>#信用值#</text>

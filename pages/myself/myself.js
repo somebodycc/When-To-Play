@@ -41,6 +41,32 @@ Page({
             }
         })
     },
+    //更改昵称
+    changeNickname(e){
+        var user = wx.getStorageSync('user')
+        var nickname = e.detail.value
+        myrequest(ip + '/user/modify-nickname', 'POST', {
+            openid: user.openid,
+            nickname
+        }).then(res => {
+            if (res.success) {
+                wx.showToast({
+                    title: '更改昵称成功',
+                    icon: 'none'
+                })
+                this.setData({
+                    ['user.nickname']: nickname
+                })
+                user.nickname = nickname
+                wx.setStorageSync('user', user)
+            }
+        }).catch(err => {
+            wx.showToast({
+              title: '更改昵称失败',
+              icon: 'none'
+            })
+        })
+    },
 
     initUserInfo(){
         var user = wx.getStorageSync('user')
