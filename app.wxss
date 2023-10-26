@@ -12,6 +12,13 @@ page {
     z-index: -999;
     background: linear-gradient(-140deg, #00ffff, #ffc0cb);
 }
+.backArrow{
+    width: 20rpx;
+    height: 20rpx;
+    border-top: solid 6rpx #000;
+    border-left: solid 6rpx #000;
+    transform: rotate(-45deg);
+}
 .roundImage{
     border: solid 1rpx #000;
     border-radius: 50%;

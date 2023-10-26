@@ -1,8 +1,8 @@
 // app.js
 const { myrequest, formatTime } = require("./utils/util")
-const ip = "http://localhost:3000"
+// const ip = "http://localhost:3000"
 // const ip = "http://172.20.10.2:3000"
-// const ip = "https://chengxuxiao.top"
+const ip = "https://chengxuxiao.top"
 
 App({
     onLaunch() {

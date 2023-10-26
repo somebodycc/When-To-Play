@@ -1,0 +1,9 @@
+<!--components/wtp_themes/wtp_themes.wxml-->
+<scroll-view scroll-y>
+    <view class="wtp_item_container">
+        <view class="wtp_item" wx:for="{{themes}}" wx:key="index" bind:tap="selectTheme" data-image="{{item.image}}" data-name="{{item.name}}">
+            <image src="{{item.image}}" mode="aspectFill"></image>
+            <text>{{item.name}}</text>
+        </view>
+    </view>
+</scroll-view>

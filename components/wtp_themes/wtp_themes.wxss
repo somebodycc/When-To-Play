@@ -1,0 +1,29 @@
+/* components/wtp_themes/wtp_themes.wxss */
+scroll-view{
+    min-height: 160rpx;
+    max-height: 425rpx;
+}
+.wtp_item_container{
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    column-gap: 20rpx;
+    row-gap: 16rpx;
+}
+.wtp_item{
+    display: flex;
+    flex-direction: column;
+    flex: none;
+}
+.wtp_item > image{
+    width: 155.5rpx;
+    height: 155.5rpx;
+    border-radius: 20%;
+}
+.wtp_item > text{
+    text-align: center;
+    font-family: 'Source Han Sans CN';
+    font-size: 32rpx;
+    color: #262626;
+}
