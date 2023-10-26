@@ -6,8 +6,8 @@
 <view class="background"></view>
 <view class="container">
     <view class="wtp_main" bind:tap="showTodoSelect">
-        <image src="{{wtp.todoImg}}" mode="aspectFill"></image>
-        <text>{{wtp.todoName}}</text>
+        <image class="{{wtp.todoImg != '' ? '' : 'roundImage'}}" src="{{wtp.todoImg}}" mode="aspectFill"></image>
+        <text>{{wtp.todoName != '' ? wtp.todoName : '请选择主题'}}</text>
     </view>
     <view class="list_container">
         <view class="list_item">
@@ -39,15 +39,61 @@ show="{{showPopup}}"
 z-index="1000"
 duration="200"
 round
-close-on-slideDown
 overlay-style="background-color: rgba(0, 0, 0, 0.5);"
 custom-style="height: {{pageHeight}}"
 bind:leave="hidePopup">
     <!-- 修改预约项目页面 -->
-    <view wx:if="{{showTodoSelect}}" class="dialogContent">
-        <view class="wtp_item" wx:for="{{reservationItems}}" wx:key="index" bind:tap="changeReservationMain" data-image="{{item.image}}" data-name="{{item.name}}">
-            <image src="{{item.image}}" mode="aspectFill"></image>
-            <text>{{item.name}}</text>
+    <view wx:if="{{showTodoSelect}}" class="dialogContent" style="height: {{pageHeight}};">
+        <form bind:submit="searchWTPitem">
+            <view class="searchBox">
+                    <view>
+                        <image src="/icons/search.png" mode="widthFix"/>
+                        <input name="search" placeholder="查找已有的什么时候主题" confirm-type="search" bind:confirm="searchWTPitem" />
+                    </view>
+                    <button form-type="submit">搜索</button>
+            </view>
+            <view style="height: 72rpx;"></view>
+        </form>
+
+        <view class="themesSegment" wx:if="{{searchThemes.length != 0}}">
+            <text class="promptText" style="color: violet;">搜索结果</text>
+            <wtp-themes themes="{{searchThemes}}" bind:select="changeReservationMain"/>
         </view>
-    </view> 
+
+        <view class="themesSegment" wx:if="{{recentThemes.length != 0}}">
+            <text class="promptText" style="color: rgb(76, 138, 219);">最近选择</text>
+            <wtp-themes themes="{{recentThemes}}" bind:select="changeReservationMain"/>
+        </view>
+
+        <view class="themesSegment">
+        <view>
+            <text class="promptText" style="color: #262626;">全部主题</text>
+            <text style="padding-left: 8rpx; color: #8c8c8c;" bind:tap="showCostomTheme">找不到想要的主题？点我自定义</text>
+        </view>
+            <wtp-themes themes="{{reservationItems}}" bind:select="changeReservationMain"/>
+        </view>
+    </view>
+    <!-- 自定义主题页面 -->
+    <view wx:if="{{showCostomTheme}}" class="dialogContent costomTheme" style="height: {{pageHeight}};">
+        <view class="backArrow" bind:tap="showTodoSelect"></view>
+        <view class="wtp_main">
+            <image class="{{customThemeImg ? '' : 'roundImage'}}" src="{{customThemeImg}}" mode="aspectFill"></image>
+            <text>{{customThemeName ? customThemeName : '请输入主题名'}}</text>
+        </view>
+        <view class="list_container">
+            <view class="list_item">
+                <text>主题图片</text>
+                <button style="margin: 0; padding-left: 0; padding-right: 0; width: 200rpx; white-space: nowrap;" bind:tap="chooseCustomThemeImg">点击选择</button>
+            </view>
+            <view class="list_item">
+                <text>主题名</text>
+                <input style="text-align: right; flex: 1;" placeholder="请输入主题名(不超过20个字符)" cursor-spacing="4" maxlength="20" value="{{customThemeName}}" bind:input="inputCustomThemeName"/>
+            </view>
+            <view class="list_item">
+                <text>是否公开该主题</text>
+                <switch checked="{{themePubilc}}" bind:change="themePubilc"></switch>
+            </view>
+        </view>
+        <button bind:tap="newTheme">上传自定义主题</button>
+    </view>
 </page-container>

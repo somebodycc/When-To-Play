@@ -22,21 +22,44 @@ Page({
             image: ip + "/images/todo-COC.png",
             name: "跑团"
         },{
-            image: "/icons/plus.png",
-            name: "自定义"
+            image: ip + "/images/todo-COC.png",
+            name: "跑团"
         }],
+        searchThemes: [],
+        recentThemes: [],
+        wtp: {},
         number: [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
         showPopup: false,
-        pageHeight: "128vw"
+        pageHeight: "75vh"
     },
 
     //调整预约项目
     changeReservationMain(e){
-        const image = e.currentTarget.dataset.image
-        const name = e.currentTarget.dataset.name
+        const image = e.detail.image
+        const name = e.detail.name
+        
+        //将最近选择添加到localStorage
+        var history = wx.getStorageSync('themeSelectHistory')
+        if (!history) history = []
+        if (!history.some((value => {   //选择的主题不存在历史记录
+            return value.name === name && value.image === image
+        }))) {
+            history.unshift({image, name})
+            history = history.slice(0, 4)  //最近选择不能超过四个
+        }
+        else {
+            history.forEach((value, index) => {    //选择的主题不存在历史记录, 将该记录提前
+                if (value.name === name && value.image === image) {
+                    history.unshift(history.splice(index, 1)[0])
+                }
+            })
+        }
+        wx.setStorageSync('themeSelectHistory', history)
+        
         this.setData({
             ["wtp.todoName"]: name,
-            ["wtp.todoImg"]: image
+            ["wtp.todoImg"]: image,
+            recentThemes: history
         })
         this.hidePopup()
     },
@@ -75,16 +98,157 @@ Page({
     //显示预约项目
     showTodoSelect(){
         this.setData({
-            showTodoSelect: true
+            showTodoSelect: true,
+            showCostomTheme: false
         })
         this.showPopup()
+    },
+    showCostomTheme(){
+        this.setData({
+            showTodoSelect: false,
+            showCostomTheme: true
+        })
     },
     //隐藏page-container
     hidePopup(){
         this.setData({
             showPopup: false,
-            showTodoSelect: false
+            showTodoSelect: false,
+            searchThemes: []    //清空搜索内容
         })
+    },
+
+    //搜索什么时候的主题
+    searchWTPitem(e){
+        var keyword
+        if (e.type === 'submit') keyword = e.detail.value.search
+        else keyword = e.detail.value
+        if (!keyword) return wx.showToast({title: '搜索内容不能为空!', icon: 'none'})
+
+        myrequest(ip + '/wtp-theme/search', 'GET', {keyword}).then(res => {
+            if (!res.success) {
+                return Promise.reject()
+            }
+            const searchThemes = res.themes.map(theme => {
+                return {
+                    themeid: theme.themeid,
+                    image: theme.theme_img,
+                    name: theme.theme_name
+                }
+            })
+            if (searchThemes.length === 0) wx.showToast({
+                title: '找不到相关的主题',
+                icon: 'none'
+            })
+            this.setData({
+                searchThemes
+            })
+        }).catch(err => {
+            wx.showToast({title: '搜索失败!', icon: 'none'})
+        })
+    },
+
+    //选择自定义主题图片
+    chooseCustomThemeImg(){
+        wx.chooseMedia({
+            count: 1,
+            mediaType: ['image'],
+            sourceType: ['album'],
+            success: res => {
+                var customThemeImg = res.tempFiles[0].tempFilePath
+                this.setData({
+                    customThemeImg
+                })
+            }
+        })
+    },
+    //输入自定义主题名
+    inputCustomThemeName(e){
+        this.setData({
+            customThemeName: e.detail.value
+        })
+    },
+    //是否公开自定义主题
+    themePubilc(e){
+        this.setData({
+            themePubilc: e.detail.value
+        })
+    },
+    //上传自定义主题
+    newTheme(){
+        var openid = wx.getStorageSync('user').openid
+        var {customThemeImg, customThemeName, themePubilc} = this.data
+        customThemeName = customThemeName.trim()
+        if (!customThemeImg) return wx.showToast({title: '请选择主题图片',icon: 'none'})
+        else if (customThemeName == '') return wx.showToast({title: '请输入主题名',icon: 'none'})
+
+        //上传
+        wx.showLoading({
+            title: "上传中",
+            mask: true
+        })
+        wx.uploadFile({
+            filePath: customThemeImg,
+            name: 'image',
+            url: ip + '/wtp-theme/new',
+            formData: {
+                type: "wtpThemeImage",
+                customThemeName,
+                themePubilc: themePubilc ? 1 : 0,
+                openid
+            },
+            success: res => {
+                var res = JSON.parse(res.data)
+                if (res.success) {
+                    wx.showToast({
+                      title: '上传成功!',
+                      icon: 'none'
+                    })
+                    this.showTodoSelect()
+                    this.setData({  //清空草稿
+                        customThemeImg: '',
+                        customThemeName: '',
+                        themePubilc: true
+                    })
+                }
+                else wx.showToast({
+                    title: '上传失败!',
+                    icon: 'none'
+                })
+            },
+            fail: res => {
+                wx.showToast({
+                    title: '上传失败!',
+                    icon: 'none'
+                })
+            },
+            complete: res => {
+                wx.hideLoading({noConflict: true})
+            }
+        })
+
+        /* myrequest(ip + '/wtp-theme/new', 'POST', {
+            customThemeImg,
+            customThemeName,
+            themePubilc,
+            openid
+        }).then(res => {
+            if (res.success) {
+                wx.showToast({
+                  title: '上传成功!',
+                  icon: 'none'
+                })
+                this.showTodoSelect()
+                this.setData({  //清空草稿
+                    customThemeImg: '',
+                    customThemeName: '',
+                    themePubilc: true
+                })
+            }
+            else return Promise.reject()
+        }).catch(err => {
+            
+        }) */
     },
 
     //接收订阅消息
@@ -138,24 +302,40 @@ Page({
             })
         })
     },
-    /* async shareTimeout(){
-        return await new Promise((resolve, reject) => {
-            setTimeout(() => {
-                console.log('shareTimeout')
-                reject()
-            }, 0)
+
+    //查找所有用户能看到的主题
+    getWtpThemes(){
+        var openid = wx.getStorageSync('user').openid
+        myrequest(ip + '/wtp-theme/user-related-all', 'GET', {openid}).then(res => {
+            if (!res.success) {
+                return Promise.reject()
+            }
+            const allThemes = res.themes.map(theme => {
+                return {
+                    themeid: theme.themeid,
+                    image: theme.theme_img,
+                    name: theme.theme_name
+                }
+            })
+            this.setData({
+                reservationItems: allThemes
+            })
+        }).catch(err => {
+            wx.showToast({title: '获取全部主题失败', icon: 'none'})
         })
-    }, */
+    },
 
     initData(){
         var date = new Date()
         var user = wx.getStorageSync('user')
+        var recentThemes = wx.getStorageSync('themeSelectHistory') //判断是否有历史选择过的主题
+
         this.setData({
             wtp: {
                 initiatorName: user.nickname,
                 initiatorAvatar: user.avatar,
-                todoName: "APEX",
-                todoImg: ip + "/images/todo-APEX.png",
+                todoName: "",
+                todoImg: "",
                 joinedPlayerNum: 1,
                 expectedPlayerNum: 4,
                 time: "今天 19:00(示例)",
@@ -165,7 +345,9 @@ Page({
             pickedDate: formatTime(date).replace(/\//g, '-').slice(0, formatTime(date).indexOf(' ')),
             pickedTime: formatTime(date).slice(formatTime(date).indexOf(' ') + 1, -3),
             numOfParticipant: 4,
-            allowExPlayer: true
+            allowExPlayer: true,
+            recentThemes,
+            themePubilc: true,
         })
     },
 
@@ -174,6 +356,7 @@ Page({
      */
     onLoad(options) {
         this.initData()
+        this.getWtpThemes()
     },
 
     /**

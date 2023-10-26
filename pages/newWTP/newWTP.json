@@ -1,5 +1,6 @@
 {
     "usingComponents": {
-        "wtp": "../../components/wtp/wtp"
+        "wtp": "../../components/wtp/wtp",
+        "wtp-themes": "../../components/wtp_themes/wtp_themes"
     }
 }

@@ -47,24 +47,68 @@ picker {
 .dialogContent{
     padding: 64rpx 32rpx 0 32rpx;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 16rpx;
+    overflow-y: scroll;
+}
+.searchBox{
+    position: fixed;
+    display: flex;
+    width: 686rpx;
+    gap: 16rpx;
     align-items: center;
     justify-content: space-between;
-    gap: 16rpx;
 }
-.wtp_item{
+    .searchBox > view:first-child{
+        height: 64rpx;
+        padding: 4rpx 8rpx;
+        border-radius: 16rpx;
+        background: linear-gradient(to right, #efefef 30%, #f0f0f0 70%, #ececec);
+        display: flex;
+        gap: 8rpx;
+        align-items: center;
+        flex: 1;
+    }
+    .searchBox > view:first-child input{
+        height: 100%;
+    }
+    .searchBox > view:first-child image{
+        width: 48rpx;
+        height: 100%;
+    }
+    .searchBox button{
+        margin: 0;
+        padding: 0;
+        width: 100rpx !important; 
+        background-color: transparent;
+        font-family: "Source Han Sans CN-Medium";
+        font-size: 32rpx;
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: visible;
+        color: #262626;
+    }
+    .searchBox button:hover{
+        background-color: transparent;
+    }
+.themesSegment{
     display: flex;
     flex-direction: column;
-    flex: none;
+    gap: 16rpx;
 }
-.wtp_item > image{
-    width: 155.5rpx;
-    height: 155.5rpx;
-    border-radius: 20%;
+.promptText{
+    font-size: 30rpx;
 }
-.wtp_item > text{
-    text-align: center;
-    font-family: 'Source Han Sans CN';
-    font-size: 32rpx;
-    color: #262626;
+
+.costomTheme{
+    animation-name: slide-in;
+    animation-duration: 200ms;
+}
+@keyframes slide-in{
+    from {
+        transform: translateX(750rpx);
+    }
+    to {
+        transform: translateX(0);
+    }
 }
