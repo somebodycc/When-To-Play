@@ -13,8 +13,8 @@ page {
     background: linear-gradient(-140deg, #00ffff, #ffc0cb);
 }
 .backArrow{
-    width: 20rpx;
-    height: 20rpx;
+    width: 25rpx;
+    height: 25rpx;
     border-top: solid 6rpx #000;
     border-left: solid 6rpx #000;
     transform: rotate(-45deg);

@@ -155,9 +155,14 @@ Page({
             mediaType: ['image'],
             sourceType: ['album'],
             success: res => {
-                var customThemeImg = res.tempFiles[0].tempFilePath
-                this.setData({
-                    customThemeImg
+                wx.cropImage({
+                    cropScale: '1:1',
+                    src: res.tempFiles[0].tempFilePath,
+                    success: res => {
+                        this.setData({
+                            customThemeImg: res.tempFilePath
+                        })
+                    }
                 })
             }
         })
@@ -224,6 +229,7 @@ Page({
             },
             complete: res => {
                 wx.hideLoading({noConflict: true})
+                this.getWtpThemes()
             }
         })
 
@@ -281,6 +287,13 @@ Page({
                 allow_extra_player: this.data.allowExPlayer,
                 expected_player_num: this.data.numOfParticipant,
                 create_time: formatTime(new Date())
+            }
+            if (!wtp.todo_name || wtp.todo_name == '') {
+                wx.showToast({
+                  title: '请选择主题',
+                  icon: 'none'
+                })
+                return rj()
             }
             myrequest(ip + '/wtp/new', 'POST', {wtp}, 2900).then(res => {   //需要设定3s内获取到res否则分享会使用错误的分享链接
                 if (res.success) {
@@ -347,7 +360,7 @@ Page({
             numOfParticipant: 4,
             allowExPlayer: true,
             recentThemes,
-            themePubilc: true,
+            themePubilc: false,
         })
     },
 

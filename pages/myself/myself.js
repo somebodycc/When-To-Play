@@ -45,6 +45,7 @@ Page({
     changeNickname(e){
         var user = wx.getStorageSync('user')
         var nickname = e.detail.value
+        if (nickname == user.nickname) return
         myrequest(ip + '/user/modify-nickname', 'POST', {
             openid: user.openid,
             nickname
