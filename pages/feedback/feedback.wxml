@@ -1,0 +1,12 @@
+<!--pages/feedback/feedback.wxml-->
+<page-meta>
+    <navigation-bar title="发送反馈"/>
+</page-meta>
+<view class="background"></view>
+<view class="container">
+    <form bind:submit="sendFeedback">
+        <textarea name="main" placeholder="{{placeholder}}" value="{{mainValue}}"></textarea>
+        <input name="contact" placeholder="联系方式(可选): 微信号/手机号/邮箱" />
+        <button style="margin-top: 16rpx;" form-type="submit">提交反馈</button>
+    </form>
+</view>

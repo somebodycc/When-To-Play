@@ -1,13 +1,13 @@
 <!--index.wxml-->
 <view class="background"></view>
-<view class="container" bind:touchstart="onTouch">
+<view class="container" bind:tap="onTouch">
     <!-- 滑块用于放置一个一个的邀约事件 -->
-    <swiper class="wtp_container" vertical>
+    <swiper class="wtp_container" vertical bind:transition="onTouch">
         <swiper-item wx:if="{{wtps.length == 0}}">
-            <view>还没有什么时候哦，快去发起邀请吧</view>
+            <view>{{loadingText}}</view>
         </swiper-item>
         <swiper-item wx:for="{{wtps}}" wx:key="id">
-            <wtp class="wtpItem" wtp="{{item}}" r-style="{{item.rStyle}}" bind:delete="onEditWTP"></wtp>
+            <wtp class="wtpItem" wtp="{{item}}" r-style="{{item.rStyle}}" bind:delete="onEditWTP" bind:archive="onEditWTP"></wtp>
         </swiper-item>
     </swiper>
     <view class="initiateBtn" catch:tap="newWTP" bind:touchstart="btnStart" bind:touchmove="btnMove" style="top: 86%;transform: translateY({{translateY}});">

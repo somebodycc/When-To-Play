@@ -9,7 +9,7 @@ Page({
      * 页面的初始数据
      */
     data: {
-        avatar: ""
+
     },
 
     //更改头像
@@ -69,6 +69,41 @@ Page({
         })
     },
 
+    //前往历史什么时候
+    toWtpHistory(){
+        wx.navigateTo({
+          url: '/pages/historyWTP/historyWTP',
+        })
+    },
+
+    //获取什么时候的数量
+    getWTPnum(){
+        var openid = wx.getStorageSync('user').openid
+        myrequest(ip + '/wtp/user-related', 'GET', {openid, all: 1}).then(res => {
+            if (res.success) {
+                this.setData({wtpNum: res.wtps.length})
+            }
+            else {
+                return Promise.reject(res)
+            }
+        }).catch(err => {
+            console.error(err)
+        })
+    },
+
+    //前往使用说明页面
+    toInstruction(){
+        wx.navigateTo({
+            url: '../instruction/instruction',
+        })
+    },
+    //前往意见反馈页面
+    toFeedback(){
+        wx.navigateTo({
+          url: '../feedback/feedback',
+        })
+    },
+
     initUserInfo(){
         var user = wx.getStorageSync('user')
         this.setData({
@@ -80,13 +115,7 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-        if (app.globalData.checkLogin) {
-            this.initUserInfo()
-        } else {
-            app.checkLoginReadyCallback = () => {
-                this.initUserInfo()
-            }
-        }
+
     },
 
     /**
@@ -100,7 +129,15 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow() {
-
+        if (app.globalData.checkLogin) {
+            this.initUserInfo()
+            this.getWTPnum()
+        } else {
+            app.checkLoginReadyCallback = () => {
+                this.initUserInfo()
+                this.getWTPnum()
+            }
+        }
     },
 
     /**

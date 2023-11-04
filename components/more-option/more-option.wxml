@@ -1,0 +1,7 @@
+<!--components/more-option/more-option.wxml-->
+<view class="moreImg">
+    <image src="/icons/more.png" mode="aspectFill" catch:tap="tapMore"></image>
+    <view wx:if="{{showMore}}" class="more_container">
+        <view wx:for="{{options}}" wx:key="index" catch:tap="select" data-index="{{index}}">{{item}}</view>
+    </view>
+</view>

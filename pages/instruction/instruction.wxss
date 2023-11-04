@@ -1,0 +1,22 @@
+/* pages/instruction/instruction.wxss */
+.container{
+    display: flex;
+    flex-direction: column;
+    gap: 16rpx;
+}
+.container > text{
+    display: block;
+    margin: 16rpx;
+}
+.container > view{
+    width: 100%;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+}
+.container > view > image{
+    width: 90%;
+    box-sizing: border-box;
+    border: thick double #ececec;
+    border-radius: 20rpx;
+}

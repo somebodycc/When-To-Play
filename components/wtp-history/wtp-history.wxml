@@ -1,0 +1,59 @@
+<!--components/wtp-history/wtp-history.wxml-->
+<view class="container">
+    <view class="initiator leftItem">
+        <text>发起人: </text>
+        <text style="color: {{self ? '#009900' : 'blueviolet'}};">{{wtp.initiatorName}}</text>
+        <image src="{{wtp.initiatorAvatar}}" mode="aspectFill"></image>
+    </view>
+    <view class="status rightItem">
+        <view>
+            <text>状态: </text>
+            <text style="color: {{statusColor}};">{{wtpStatusStr}}</text>
+            <text wx:if="{{wtp.wtpStatus == 0}}"> {{archivedStr}}</text>
+        </view>
+        <view wx:if="{{!self}}">
+            <text>我的选择: </text>
+            <text style="color: {{myStatusColor}};">{{myStatusStr}}</text>
+        </view>
+    </view>
+    <view class="theme leftItem">
+        <text>什么时候主题: </text>
+        <view>
+            <image src="{{wtp.todoImg}}" mode="aspectFill"></image>
+            <text>{{wtp.todoName}}</text>
+        </view>
+    </view>
+    <view class="rightItem"></view>
+    <view class="playerNum leftItem">
+        <text>参与人数: {{wtp.joinedPlayerNum}}/{{wtp.expectedPlayerNum}}</text>
+    </view>
+    <view class="rightItem"></view>
+    <view class="players leftItem">
+        <text>参与人: </text>
+        <view>
+            <view class="player" wx:for="{{wtp.participants}}" wx:key="index">
+                <text style="color: {{item.openid == me.openid ? '#009900' : 'blueviolet'}};">{{item.nickname}}</text>
+                <image src="{{item.avatar}}" mode="aspectFill"></image>
+                <text wx:if="{{index != wtp.participants.length - 1}}">,</text>
+            </view>
+        </view>
+    </view>
+    <view class="wtpTime leftItem">
+        <text>预约时间: {{wtp.time}}</text>
+    </view>
+    <view class="rightItem"></view>
+    <view class="wtpTime leftItem">
+        <text>创建时间: {{wtp.createTime}}</text>
+    </view>
+    <view class="expandArrow rightItem">
+        <view style="transform: rotate({{arrowRotateDeg}});" bind:tap="showMore"></view>
+    </view>
+    <view style="max-height: {{showMore === true ? '250rpx' : '0'}};" class="buttons leftItem">
+        <button wx:if="{{wtp.wtpStatus == 0 && wtp.archived == 0}}" bind:tap="archiveWTP">归档</button>
+        <button wx:if="{{wtp.wtpStatus == 0 && wtp.archived == 1}}" bind:tap="unarchiveWTP">取消归档</button>
+        <button wx:if="{{wtp.wtpStatus == 0 && wtp.status == -1}}" bind:tap="acceptWTP">接受</button>
+        <button wx:if="{{wtp.wtpStatus == 0 && wtp.status == 1}}" bind:tap="rejectWTP">拒绝</button>
+        <button wx:if="{{wtp.wtpStatus != 0}}" bind:tap="hideWTP">删除记录</button>
+        <button wx:if="{{wtp.wtpStatus == 0 && self}}" type="warn" bind:tap="deleteWTP">撤回</button>
+    </view>
+</view>

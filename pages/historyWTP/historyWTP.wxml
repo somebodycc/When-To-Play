@@ -1,0 +1,11 @@
+<!--pages/historyWTP/historyWTP.wxml-->
+<page-meta>
+    <navigation-bar title="什么时候历史"/>
+</page-meta>
+<view class="background"></view>
+<view class="container" bind:tap="onTouch">
+    <block wx:for="{{wtps}}" wx:key="wtpid">
+        <wtp-history wtp="{{item}}" bind:delete="onEditWTP" bind:archive="onEditWTP" bind:unarchive="onEditWTP" bind:hide="onEditWTP"></wtp-history>
+    </block>
+    <text style="margin-bottom: 50rpx; text-align: center; color: #6c6c6c;">{{loadingText}}</text>
+</view>

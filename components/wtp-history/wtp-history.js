@@ -1,7 +1,7 @@
-// components/wtp/wtp.js
+// components/wtp-history/wtp-history.js
 const app = getApp()
 const ip = app.globalData.ip
-const { myrequest } = require("../../utils/util")
+const { myrequest } = require('../../utils/util')
 
 Component({
 
@@ -13,23 +13,27 @@ Component({
             type: Object,
             value: {}
         },
-        rStyle: {
-            type: Number,
-            value: 1
-        }
     },
 
     /**
      * 组件的初始数据
      */
     data: {
-
+        arrowRotateDeg: '-90deg'
     },
 
     /**
      * 组件的方法列表
      */
     methods: {
+        //展示更多
+        showMore(){
+            this.setData({
+                showMore: this.data.showMore === true ? false : true,
+                arrowRotateDeg: this.data.arrowRotateDeg === '-90deg' ? '-180deg' : '-90deg'
+            })
+        },
+
         //归档什么时候
         archiveWTP(){
             var archived = 1
@@ -49,6 +53,7 @@ Component({
                     this.setData({
                         ['wtp.archived']: archived
                     })
+                    this.parseArchived()
                 }
             }).catch(err => {
                 wx.showToast({
@@ -56,7 +61,34 @@ Component({
                     icon: 'none'
                 })
             })
-            this.hideMore()
+        },
+        //取消归档什么时候
+        unarchiveWTP(){
+            var archived = 0
+            const openid = wx.getStorageSync('user').openid
+            const wtpid = this.data.wtp.wtpid
+            myrequest(ip + '/wtp/mod-user-archived', 'POST', {
+                openid,
+                wtpid,
+                archived
+            }).then(res => {
+                if (res.success) {
+                    wx.showToast({
+                        title: '取消归档成功！',
+                        icon: 'none'
+                      })
+                    this.triggerEvent('unarchive')
+                    this.setData({
+                        ['wtp.archived']: archived
+                    })
+                    this.parseArchived()
+                }
+            }).catch(err => {
+                wx.showToast({
+                    title: '操作失败',
+                    icon: 'none'
+                })
+            })
         },
         //接受邀请
         acceptWTP(){
@@ -100,7 +132,6 @@ Component({
                     icon: 'none'
                 })
             })
-            this.hideMore()
         },
         //拒绝邀请
         rejectWTP(){
@@ -130,7 +161,30 @@ Component({
                     icon: 'none'
                 })
             })
-            this.hideMore()
+        },
+        //隐藏什么时候(删除记录)
+        hideWTP(){
+            var hidden = 1
+            const openid = wx.getStorageSync('user').openid
+            const wtpid = this.data.wtp.wtpid
+            myrequest(ip + '/wtp/mod-user-hidden', 'POST', {
+                openid,
+                wtpid,
+                hidden
+            }).then(res => {
+                if (res.success) {
+                    wx.showToast({
+                        title: '删除成功！',
+                        icon: 'none'
+                      })
+                    this.triggerEvent('hide')
+                }
+            }).catch(err => {
+                wx.showToast({
+                    title: '操作失败',
+                    icon: 'none'
+                })
+            })
         },
         //撤回什么时候
         deleteWTP(){
@@ -158,32 +212,104 @@ Component({
                     } else if (res.cancel) {
                         //用户点击取消
                     }
-                    this.hideMore()
                 }
             })
-            
         },
 
-        //更多操作点击
-        tapMore(){
-            this.setData({
-                showMore: this.data.showMore ? false : true
+        //判断是否是自己发送的什么时候
+        judgeSelf(){
+            var user = this.data.me
+            this.setData({  
+                self: user.openid == this.data.wtp.openid ? true : false
             })
         },
-        //显示更多操作
-        showMore(){
+        //将状态转换为文字
+        parseWtpStatus(){
+            var status = this.data.wtp.wtpStatus
+            var statusStr, statusColor
+            switch (status) {
+                case 0:
+                    statusStr = '进行中'
+                    statusColor = 'slateblue'
+                    break
+                case 1:
+                    statusStr = '已完成'
+                    statusColor = 'orange'
+                    break
+                default:
+                    statusStr = '未知'
+                    break
+            }
             this.setData({
-                showMore: true
+                wtpStatusStr: statusStr,
+                statusColor
             })
         },
-        //关闭更多操作
-        hideMore(){
+        //将归档转换为文字
+        parseArchived(){
+            var archived = this.data.wtp.archived
+            var archivedStr
+            switch (archived) {
+                case 0:
+                    archivedStr = ''
+                    break
+                case 1:
+                    archivedStr = '已归档'
+                    break
+                default:
+                    archivedStr = '未知'
+                    break
+            }
             this.setData({
-                showMore: false
+                archivedStr,
             })
         },
-        doNothing(){
-            return console.log('I have done nothing');
+        //将选择转换为文字
+        parseStatus(){
+            var status = this.data.wtp.status
+            var statusStr, statusColor
+            switch (status) {
+                case 0:
+                    statusStr = '未响应'
+                    statusColor = 'slateblue'
+                    break
+                case 1:
+                    statusStr = '已接受'
+                    statusColor = 'orange'
+                    break
+                case -1:
+                    statusStr = '已拒绝'
+                    statusColor = 'indianred'
+                    break
+                default:
+                    statusStr = '未知'
+                    break
+            }
+            this.setData({
+                myStatusStr: statusStr,
+                myStatusColor: statusColor
+            })
+        },
+
+        //初始化数据
+        initData(){
+            this.setData({me: wx.getStorageSync('user')})
         }
-    }
+    },
+
+    /**
+     * 组件的生命周期
+     */
+    lifetimes: {
+        attached() {
+            this.initData()
+            this.judgeSelf()
+            this.parseWtpStatus()
+            this.parseArchived()
+            this.parseStatus()
+        },
+        detached() {
+          // 在组件实例被从页面节点树移除时执行
+        },
+      },
 })

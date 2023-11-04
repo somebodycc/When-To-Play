@@ -8,30 +8,54 @@
 
 .user_info{
     display: flex;
-    align-items: center;
     justify-content: space-around;
 }
     .user_info_count{
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: center;
         text-align: center;
         flex: 1;
     }
+    .user_info_count:hover{
+        background-color: rgba(220, 220, 220, 0.5);
+    }
     .user_info view:nth-child(2){
+        position: relative;
         display: flex;
         flex-direction: column;
         gap: 16rpx;
         align-items: center;
         justify-content: center;
     }
-    .user_info view:nth-child(2) image{
+    .avatar image:first-of-type{
         width: 256rpx;
         height: 256rpx;
         border-radius: 50%;
     }
-    .user_info view:nth-child(2) input{
+    .avatar image:last-of-type{
+        position: absolute;
+        bottom: 10%;
+        right: 20%;
+        width: 48rpx;
+        height: 48rpx;
+        background-color: #fff;
+        border: 4rpx solid #fff;
+        border-radius: 50%;
+    }
+    .nickname{
+        position: relative;
+    }
+    .nickname > input{
         text-align: center;
+        flex: 1;
+    }
+    .nickname > image{
+        position: absolute;
+        right: 0;
+        width: 24rpx;
+        height: 24rpx;
     }
 
 .list_container{
@@ -41,13 +65,16 @@
 .list_item{
     height: 112rpx;
     box-sizing: border-box;
-    border-top: solid 2rpx #d9d9d9;
+    border-top: solid 2rpx #e9e9e9;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
+.list_item:hover{
+    background-color: rgba(217, 217, 217, 0.3);
+}
 .list_item:last-of-type{
-    border-bottom: solid 2rpx #d9d9d9;
+    border-bottom: solid 2rpx #e9e9e9;
 }
 .list_item text:first-child{
     font-size: 32rpx;

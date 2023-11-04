@@ -1,0 +1,35 @@
+/* components/more-option/more-option.wxss */
+.moreImg{
+    position: relative;
+    width: 32rpx;
+    height: 48rpx;
+}
+    .moreImg > image{
+        width: 32rpx;
+        height: 48rpx;
+    }
+.more_container{
+    position: absolute;
+    right: 0;
+    bottom: 100%;
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(100px);
+    padding: 0 32rpx;
+    min-width: 160rpx;
+    text-align: center;
+    white-space: nowrap;
+    box-sizing: border-box;
+    border: solid 1rpx #bcbcbc;
+    border-radius: 32rpx 32rpx 8rpx 32rpx;
+    transform-origin: 100% 100%;
+    animation-duration: 200ms;
+    animation-name: show-more;
+}
+.more_container view{
+    padding: 16rpx 0;
+    box-sizing: border-box;
+    border-bottom: solid 1rpx #bcbcbc;
+}
+.more_container view:last-child{
+    border: none;
+}

@@ -352,7 +352,8 @@ Page({
                 joinedPlayerNum: 1,
                 expectedPlayerNum: 4,
                 time: "今天 19:00(示例)",
-                status: 0
+                status: 0,
+                wtpStatus: 0
             },
             today: formatTime(date).slice(0, formatTime(date).indexOf(' ')),
             pickedDate: formatTime(date).replace(/\//g, '-').slice(0, formatTime(date).indexOf(' ')),

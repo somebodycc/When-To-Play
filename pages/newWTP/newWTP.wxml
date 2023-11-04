@@ -23,7 +23,7 @@
             <picker mode="selector" range="{{number}}" value="{{2}}" bind:change="bindPickerChange">{{numOfParticipant}}</picker>
         </view>
         <view class="list_item">
-            <text>是否允许超员</text>
+            <text>是否允许超员(开发中)</text>
             <text>{{item.value}}</text>
             <switch checked="{{allowExPlayer}}" bind:change="exPlayer"></switch>
         </view>

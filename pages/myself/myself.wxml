@@ -2,24 +2,39 @@
 <view class="background"></view>
 <view class="container">
     <view class="user_info">
-        <view class="user_info_count">
-            <text>什么时候</text>
-            <text>1</text>
+        <view class="user_info_count" bind:tap="toWtpHistory">
+            <view>什么时候</view>
+            <view>{{wtpNum}}</view>
         </view>
         <view>
-            <button style="background-color: transparent;" open-type="chooseAvatar" bind:chooseavatar="changeAvatar">
+            <button class="avatar" style="background-color: transparent;" open-type="chooseAvatar" bind:chooseavatar="changeAvatar">
                 <image src="{{user.avatar}}" mode="aspectFill"></image>
+                <image src="/icons/edit.png" mode="widthFix"></image>
             </button>
-            <input type="nickname" value="{{user.nickname}}" maxlength="20" bind:blur="changeNickname"></input>
+            <view class="nickname">
+                <input type="nickname" value="{{user.nickname}}" maxlength="20" bind:blur="changeNickname"></input>
+            </view>
         </view>
         <view class="user_info_count">
-            <text>#信用值#</text>
-            <text>1</text>
+            <text>信用值</text>
+            <text>#开发中#</text>
         </view>
     </view>
     <view class="list_container">
-        <view class="list_item" wx:for="{{['选项1', '选项2', '选项3', '选项4']}}" wx:key="index">
-            <text>{{item}}</text>
+        <view class="list_item" bind:tap="toInstruction">
+            <text>使用说明</text>
         </view>
+        <view class="list_item" bind:tap="toFeedback">
+            <text>意见反馈</text>
+        </view>
+        <!-- <view class="list_item">
+            <text>选项二</text>
+        </view>
+        <view class="list_item">
+            <text>选项三</text>
+        </view>
+        <view class="list_item">
+            <text>选项四</text>
+        </view> -->
     </view>
 </view>

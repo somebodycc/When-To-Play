@@ -2,7 +2,10 @@
     "pages": [
         "pages/index/index",
         "pages/myself/myself",
-        "pages/newWTP/newWTP"
+        "pages/newWTP/newWTP",
+        "pages/historyWTP/historyWTP",
+        "pages/feedback/feedback",
+        "pages/instruction/instruction"
     ],
     "window": {
         "backgroundTextStyle": "light",
@@ -29,7 +32,9 @@
             }
         ]
     },
-    "usingComponents": {},
+    "usingComponents": {
+        "more-option": "./components/more-option/more-option"
+    },
     "style": "v2",
     "sitemapLocation": "sitemap.json"
 }

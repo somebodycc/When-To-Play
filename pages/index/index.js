@@ -12,6 +12,7 @@ Page({
      */
     data: {
         wtps: [],
+        loadingText: '加载中...',
         showPopup: false,
         pageHeight: "124vw",
         translateY: '0px'
@@ -52,7 +53,7 @@ Page({
             const rowWtps = res.wtps
             var wtps = rowWtps.map(wtp => {
                 return {
-                    id: wtp.wtp_id,
+                    wtpid: wtp.wtp_id,
                     initiatorName: wtp.nickname,
                     initiatorAvatar: wtp.avatar,
                     todoName: wtp.todo_name,
@@ -60,12 +61,14 @@ Page({
                     joinedPlayerNum: wtp.joined_player_num,
                     expectedPlayerNum: wtp.expected_player_num,
                     time: wtp.format_wtp_time,
+                    wtpStatus: wtp.wtp_status,
                     status: wtp.status,
                     rStyle: openid == wtp.openid ? 2 : 1
                 }
             })
             this.setData({
-                wtps
+                wtps,
+                loadingText: "还没有什么时候哦，快去发起邀请吧~"
             })
         })
     },
@@ -114,9 +117,9 @@ Page({
     btnStart(e){
         startPoint = e.touches[0]
     },
-    //监听按钮移动结束
+    //监听按钮移动
     btnMove(e){
-        endPoint = e.touches[e.touches.length - 1]  //获取拖动结束点
+        endPoint = e.touches[e.touches.length - 1]  //获取拖动点
         var translateY = endPoint.clientY - startPoint.clientY
         startPoint = endPoint
         var floatY = parseFloat(this.data.translateY.slice(0, -2)) + parseFloat(translateY)

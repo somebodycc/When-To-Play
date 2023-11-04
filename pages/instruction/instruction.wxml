@@ -1,0 +1,29 @@
+<!--pages/instruction/instruction.wxml-->
+<page-meta>
+    <navigation-bar title="使用说明" />
+</page-meta>
+<view class="background"></view>
+<view class="container">
+    <text>欢迎使用什么时候WhenToPlay小程序，这是一款帮助您和他人快速预约游戏等的实用小工具，以下是产品使用说明</text>
+    <text>在主页，点击“发起什么时候”按钮进入什么时候设置页面</text>
+    <view>
+        <image src="/images/instruction1.jpg" mode="widthFix"></image>
+    </view>
+    <text>选择合适的什么时候主题，并调整时间和人数等设置，调整完毕后便可以分享给好友了</text>
+    <view>
+        <image src="/images/instruction2.jpg" mode="widthFix"></image>
+    </view>
+    <text>发送后在主页可以看到进行中的什么时候</text>
+    <view>
+        <image src="/images/instruction3.jpg" mode="widthFix"></image>
+    </view>
+    <text>你也可以在“我的”界面（在这里可以修改昵称和头像）点击什么时候，进入历史页面</text>
+    <view>
+        <image src="/images/instruction4.jpg" mode="widthFix"></image>
+    </view>
+    <text>历史页面可以看到进行中和已经完成的什么时候，并进行一些操作</text>
+    <view>
+        <image src="/images/instruction5.jpg" mode="widthFix"></image>
+    </view>
+    <view style="margin-top: 50rpx;"></view>
+</view>

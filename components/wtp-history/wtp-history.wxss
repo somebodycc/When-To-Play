@@ -1,0 +1,138 @@
+/* components/wtp-history/wtp-history.wxss */
+.container{
+    width: 100%;
+    padding: 8rpx 16rpx;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8rpx;
+    justify-content: space-between;
+
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(100px);
+    box-sizing: border-box;
+    box-shadow: -4rpx 4rpx 8rpx 2rpx rgb(170, 170, 170, 0.7);
+
+    color: #444444;
+    font-size: 28rpx;
+}
+.leftItem, .rightItem{
+    flex-basis: 35%;
+}
+.rightItem{
+    text-align: right;
+}
+
+.initiator{
+    max-width: 62%;
+    display: flex;
+    align-items: center;
+    gap: 8rpx;
+    flex-shrink: 1;
+}
+.initiator > text:first-of-type{
+    white-space: nowrap;
+}
+.initiator > text:last-of-type{
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.initiator > image{
+    display: inline-block;
+    width: 64rpx;
+    height: 64rpx;
+    border-radius: 50%;
+    flex: none;
+}
+
+.status{
+    white-space: nowrap;
+}
+
+.theme{
+    display: flex;
+}
+.theme > text{
+    flex: none;
+    display: block;
+}
+.theme > view{
+    margin-left: 50%;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(16rpx);
+}
+.theme > view > image{
+    margin: 0 auto;
+    width: 144rpx;
+    height: 144rpx;
+    border-radius: 20%;
+}
+.theme > view > text{
+    display: block;
+    text-align: center;
+}
+
+.players{
+    flex-basis: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8rpx;
+}
+.players > view{
+    overflow-x: scroll;
+    display: flex;
+    align-items: center;
+    gap: 8rpx;
+}
+.player{
+    display: flex;
+    align-items: center;
+    gap: 8rpx;
+}
+.players > text:first-of-type{
+    white-space: nowrap;
+}
+.player > text{
+    display: inline-block;
+    white-space: nowrap;
+    overflow: visible;
+}
+.player > image{
+    display: inline-block;
+    width: 64rpx;
+    height: 64rpx;
+    border-radius: 50%;
+    flex: none;
+}
+
+.wtpTime{
+    flex: none;
+}
+
+.expandArrow{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.expandArrow > view{
+    width: 0;
+    height: 0;
+    border-left: 20rpx solid transparent;
+    border-right: 20rpx solid transparent;
+    border-bottom: 33rpx solid rgba(218, 182, 210, 0.7);
+    transition: transform 0.25s;
+}
+
+.buttons{
+    display: flex;
+    flex-direction: column;
+    gap: 8rpx;
+    flex-basis: 100%;
+    overflow: hidden;
+    transition: max-height 0.25s ease;    /* 动画渐变样式 */
+}

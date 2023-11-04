@@ -1,0 +1,6 @@
+{
+    "usingComponents": {
+        "wtp": "../../components/wtp/wtp",
+        "wtp-history": "../../components/wtp-history/wtp-history"
+    }
+}
