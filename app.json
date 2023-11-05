@@ -4,7 +4,6 @@
         "pages/myself/myself",
         "pages/newWTP/newWTP",
         "pages/historyWTP/historyWTP",
-        "pages/feedback/feedback",
         "pages/instruction/instruction"
     ],
     "window": {

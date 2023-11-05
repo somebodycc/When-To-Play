@@ -6,7 +6,7 @@
 <view class="container">
     <form bind:submit="sendFeedback">
         <textarea name="main" placeholder="{{placeholder}}" value="{{mainValue}}"></textarea>
-        <input name="contact" placeholder="联系方式(可选): 微信号/手机号/邮箱" />
+        <input name="contact" placeholder="联系方式(可选): 邮箱/手机号" />
         <button style="margin-top: 16rpx;" form-type="submit">提交反馈</button>
     </form>
 </view>

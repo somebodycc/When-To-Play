@@ -17,24 +17,15 @@
         </view>
         <view class="user_info_count">
             <text>信用值</text>
-            <text>#开发中#</text>
+            <text>即将推出</text>
         </view>
     </view>
     <view class="list_container">
         <view class="list_item" bind:tap="toInstruction">
             <text>使用说明</text>
         </view>
-        <view class="list_item" bind:tap="toFeedback">
-            <text>意见反馈</text>
-        </view>
-        <!-- <view class="list_item">
-            <text>选项二</text>
-        </view>
         <view class="list_item">
-            <text>选项三</text>
+            <button class="feedbackBtn" open-type="feedback">意见反馈</button>
         </view>
-        <view class="list_item">
-            <text>选项四</text>
-        </view> -->
     </view>
 </view>

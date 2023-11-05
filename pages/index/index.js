@@ -100,6 +100,7 @@ Page({
                     joinedPlayerNum: rowWtp.joined_player_num,
                     expectedPlayerNum: rowWtp.expected_player_num,
                     time: rowWtp.format_wtp_time,
+                    wtpStatus: rowWtp.wtp_status,
                     status: userStatus,
             }
             this.setData({

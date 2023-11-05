@@ -26,8 +26,8 @@ overlay-style="background-color: rgba(0, 0, 0, 0.5);"
 custom-style="height: {{pageHeight}}"
 bind:leave="hidePopup">
     <!-- 链接信息页面 -->
-    <view wx:if="{{showShareLink}}" class="dialogContent">
-        <wtp wtp="{{linkWtp}}"></wtp>
+    <view wx:if="{{showShareLink}}" class="dialogContent" bind:tap="onTouch">
+        <wtp class="wtpItem" wtp="{{linkWtp}}"></wtp>
         <view class="ignoreBtn">
             <text bind:tap="hidePopup">以后再说>>></text>
         </view>
