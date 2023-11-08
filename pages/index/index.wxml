@@ -27,7 +27,7 @@ custom-style="height: {{pageHeight}}"
 bind:leave="hidePopup">
     <!-- 链接信息页面 -->
     <view wx:if="{{showShareLink}}" class="dialogContent" bind:tap="onTouch">
-        <wtp class="wtpItem" wtp="{{linkWtp}}"></wtp>
+        <wtp class="wtpItem" wtp="{{linkWtp}}" bind:accept="hidePopup" bind:reject="hidePopup"></wtp>
         <view class="ignoreBtn">
             <text bind:tap="hidePopup">以后再说>>></text>
         </view>

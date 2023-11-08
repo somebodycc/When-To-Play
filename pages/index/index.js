@@ -74,7 +74,7 @@ Page({
     },
 
     //检测是否为点击受邀链接进入小程序
-    async detectShare(options){
+    detectShare(options){
         if (!options || !options.wtpInvitation) return
 
         const wtpid = options.wtpInvitation
@@ -83,28 +83,31 @@ Page({
         //显示分享过来的什么时候
         this.showShareLink()
         //将当前用户加入分享者的名单
-        await myrequest(ip + '/wtp/new-invitee', 'POST', {wtpid, openid: user.openid})
-        //获取当前用户是否已经接受/拒绝该什么时候
-        await myrequest(ip + '/wtp/user-status', 'GET', {wtpid, openid: user.openid}).then(res => {
-            if (res.success) userStatus = res.status
+        myrequest(ip + '/wtp/new-invitee', 'POST', {wtpid, openid: user.openid})
+        .then(async () => {
+            //获取当前用户是否已经接受/拒绝该什么时候
+            const res = await myrequest(ip + '/wtp/user-status', 'GET', { wtpid, openid: user.openid })
+            if (res.success)
+                userStatus = res.status
         })
-
-        myrequest(ip + '/wtp', 'GET', {wtpid}).then(res => {
-            const rowWtp = res.wtp
-            var wtp = {
-                    id: rowWtp.wtp_id,
-                    initiatorName: rowWtp.nickname,
-                    initiatorAvatar: rowWtp.avatar,
-                    todoName: rowWtp.todo_name,
-                    todoImg: rowWtp.todo_image,
-                    joinedPlayerNum: rowWtp.joined_player_num,
-                    expectedPlayerNum: rowWtp.expected_player_num,
-                    time: rowWtp.format_wtp_time,
-                    wtpStatus: rowWtp.wtp_status,
-                    status: userStatus,
-            }
-            this.setData({
-                linkWtp: wtp
+        .then(() => {
+            myrequest(ip + '/wtp', 'GET', {wtpid}).then(res => {
+                const rowWtp = res.wtp
+                var wtp = {
+                        wtpid: rowWtp.wtp_id,
+                        initiatorName: rowWtp.nickname,
+                        initiatorAvatar: rowWtp.avatar,
+                        todoName: rowWtp.todo_name,
+                        todoImg: rowWtp.todo_image,
+                        joinedPlayerNum: rowWtp.joined_player_num,
+                        expectedPlayerNum: rowWtp.expected_player_num,
+                        time: rowWtp.format_wtp_time,
+                        wtpStatus: rowWtp.wtp_status,
+                        status: userStatus,
+                }
+                this.setData({
+                    linkWtp: wtp
+                })
             })
         })
     },
@@ -166,10 +169,6 @@ Page({
     onShow() {
         if (app.globalData.checkLogin) {
             this.getRelatedWTP()
-        } else {
-            app.checkLoginReadyCallback = () => {
-                this.getRelatedWTP()
-            }
         }
     },
 

@@ -44,7 +44,7 @@
         <!-- 处理自己的什么时候 -->
         <view wx:if="{{rStyle === 2}}">
             <view class="reservation_status">
-                <button open-type="share" data-todoname="{{wtp.todoName}}" data-wtpid="{{wtp.id}}">分享该什么时候</button>
+                <button open-type="share" data-todoname="{{wtp.todoName}}" data-wtpid="{{wtp.wtpid}}">分享该什么时候</button>
                 <view>
                     <more-option wx:if="{{wtp.wtpStatus == 0}}" options="{{['归档(不在主页显示)', '撤回']}}" show-more="{{showMore}}" bind:select0="archiveWTP" bind:select1="deleteWTP"></more-option>
                     <more-option wx:else options="{{['删除记录']}}" show-more="{{showMore}}" bind:select0=""></more-option>
